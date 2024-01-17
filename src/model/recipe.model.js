@@ -11,14 +11,25 @@ const recipeModel = {
         }
     },
 
-    getByTitle: (title) => {
-        try{
-            return db.query(`SELECT title = ${title} FROM recipe`);
-        }
+    searchByTitle: (keyword, sort) => {
+        return new Promise ((resolve, reject)=>{
+            let query = `SELECT * FROM recipe WHERE title LIKE '%${keyword}%'`;
+            if(sort){
+                if(sort === "ASC" ){
+                    query += "ORDER BY title ASC";
+                } else if (sort === "DESC"){
+                    query += "ORDER BY title DESC";
+                }
+            }
+            db.query(query, (err, res)=>{
+                if(err){
+                    reject(err);
+                    
+                }
+                resolve(res);
+            });
 
-        catch(err){
-            console.log(err.message);
-        }
+        });
     },
 
     postRecipes: ({title, ingredients, photo, video}) => {
@@ -33,7 +44,7 @@ const recipeModel = {
         }
     },
 
-    updateRecipes: (recipe_id, title, ingredients, photo, video) => {
+    updateRecipes: ({recipe_id, title, ingredients, photo, video}) => {
         try {
             return db.query(`UPDATE recipe SET title = '${title}',
             ingredients = '${ingredients}', photo = '${photo}', video = '${video}'

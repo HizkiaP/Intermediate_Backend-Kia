@@ -8,11 +8,24 @@ const recipeController = {
       res.status(200);
       res.json({
         message: "Get All Recipe Success",
-        data: result,
+        data: result.rows,
       });
+      console.log(result);
     } catch (err) {
       console.log(err.message);
     }
+  },
+
+  searchBy: (req, res) => {
+    const {keyword, sort} = req.query;
+    recipeModel.searchByTitle(keyword, sort)
+    .then((result)=>{
+      res.json(result);
+    })
+    .catch((error)=>{
+      console.log(error);
+    });
+  
   },
 
   createRecipe: async (req, res) => {
@@ -42,20 +55,22 @@ const recipeController = {
 
   updateRecipe: async (req, res) => {
     try {
-      const searchId = req.params.recipe_id;
-      const { rowCount, rows } = await recipeModel.findId(searchId);
-      if (!rowCount) {
-        console.log("Recipe Id Not Found");
-      }
+      
+      // const { rowCount, rows } = await recipeModel.findId(searchId);
+      // if (!rowCount) {
+      //   console.log("Recipe Id Not Found");
+      // }
 
-      const data = rows[0];
-      console.log(data);
+      // const data = rows[0];
+      // console.log(data);
 
       try {
+        const recipe_id = req.params.recipe_id;
         const { title, ingredients, video } = req.body;
         let photo = cloudinary.uploader.upload(req.file.path);
         const image = photo.url;
         const data = {
+          recipe_id,
           title,
           ingredients,
           photo: image,

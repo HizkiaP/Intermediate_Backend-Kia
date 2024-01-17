@@ -146,8 +146,8 @@ const userController = {
 
   userLogin: async (req, res) => {
     try {
-      const { username, password } = req.body;
-      const result = await userModel.postLogin(username);
+      const { email, password } = req.body;
+      const result = await userModel.postLogin(email);
       console.log(result);
       if (!result.rows[0]) {
         return res.status(401).json({
@@ -166,16 +166,19 @@ const userController = {
           .json({ error: "Authentication failed password" });
       }
       const token = jwt.sign(
-        { user_id: result.rows[0].user_id, username: result.rows[0].username },
+        { user_id: result.rows[0].user_id, email: result.rows[0].email },
         process.env.SECRET_KEY,
         {
           expiresIn: "1h",
         }
       );
+      const data = result;
+      console.log(data);
       console.log(token);
       res.json({
         message: "Login Successful",
         token,
+        data
       });
     } catch (err) {
       console.log(err.message);

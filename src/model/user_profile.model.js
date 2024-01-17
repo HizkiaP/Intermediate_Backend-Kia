@@ -66,9 +66,9 @@ const userModel = {
         }
     },
 
-    postLogin: (username) => {
+    postLogin: (email) => {
         try{
-            return db.query(`SELECT * FROM user_profile WHERE username = '${username}'`);
+            return db.query(`SELECT * FROM user_profile WHERE email = '${email}'`);
         }
 
         catch(err){
