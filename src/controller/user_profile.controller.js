@@ -167,7 +167,7 @@ const userController = {
       }
       const token = jwt.sign(
         { user_id: result.rows[0].user_id, email: result.rows[0].email },
-        process.env.SECRET_KEY,
+        process.env.VERCEL_SECRET_KEY,
         {
           expiresIn: "1h",
         }
