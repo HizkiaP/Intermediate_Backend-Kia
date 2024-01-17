@@ -8,7 +8,7 @@ const verifyToken = (req, res, next) => {
         });
     }
     try {
-        const decoded = jwt.verify(token, process.env.SECRET_KEY);
+        const decoded = jwt.verify(token, process.env.VERCEL_SECRET_KEY);
         req.user_id = decoded.user_id;
         next();
     }
