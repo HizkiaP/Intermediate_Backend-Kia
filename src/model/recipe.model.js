@@ -11,15 +11,21 @@ const recipeModel = {
         }
     },
 
-    searchByTitle: (keyword, sort) => {
+    searchByTitle: (keyword, sort, limit, offset) => {
         return new Promise ((resolve, reject)=>{
-            let query = `SELECT * FROM recipe WHERE title LIKE '%${keyword}%'`;
+            let query = `SELECT * FROM recipe WHERE title ILIKE '%${keyword}%'`;
             if(sort){
                 if(sort === "ASC" ){
                     query += "ORDER BY title ASC";
                 } else if (sort === "DESC"){
                     query += "ORDER BY title DESC";
                 }
+            }
+            if (limit) {
+                query += ` LIMIT ${limit}`;
+            }
+            if (offset) {
+                query += ` OFFSET ${offset}`;
             }
             db.query(query, (err, res)=>{
                 if(err){

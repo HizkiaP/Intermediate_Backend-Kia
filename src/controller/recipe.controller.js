@@ -17,15 +17,15 @@ const recipeController = {
   },
 
   searchBy: (req, res) => {
-    const {keyword, sort} = req.query;
-    recipeModel.searchByTitle(keyword, sort)
+    const {keyword, sort, limit, offset} = req.query;
+    // const search = keyword.toLowerCase();
+    recipeModel.searchByTitle(keyword, sort, limit, offset)
     .then((result)=>{
-      res.json(result);
+      res.json(result.rows);
     })
     .catch((error)=>{
       console.log(error);
     });
-  
   },
 
   createRecipe: async (req, res) => {
