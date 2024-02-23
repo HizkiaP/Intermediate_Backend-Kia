@@ -17,28 +17,33 @@ const recipeController = {
   },
 
   searchBy: (req, res) => {
-    const {keyword, sort, limit, offset} = req.query;
+    const { keyword, sort, limit, offset } = req.query;
     // const search = keyword.toLowerCase();
-    recipeModel.searchByTitle(keyword, sort, limit, offset)
-    .then((result)=>{
-      res.json(result.rows);
-    })
-    .catch((error)=>{
-      console.log(error);
-    });
+    recipeModel
+      .searchByTitle(keyword, sort, limit, offset)
+      .then((result) => {
+        res.json(result.rows);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
 
   createRecipe: async (req, res) => {
     try {
       const { title, ingredients, video } = req.body;
-      const photo = cloudinary.uploader.upload(req.file.path);
-      console.log("photo === ",photo);
-      const image = (await photo).url;
-      console.log("image === ",image);
+      let photo = "";
+      if (req.file) {
+        const result = await cloudinary.uploader.upload(req.file.path);
+        photo = result.url;
+      }
+      console.log("photo === ", photo);
+      // const image = photo.url;
+      // console.log("image === ", image);
       const data = {
         title,
         ingredients,
-        photo: image,
+        photo,
         video,
       };
       console.log(data);
@@ -55,7 +60,6 @@ const recipeController = {
 
   updateRecipe: async (req, res) => {
     try {
-      
       // const { rowCount, rows } = await recipeModel.findId(searchId);
       // if (!rowCount) {
       //   console.log("Recipe Id Not Found");
