@@ -71,13 +71,19 @@ const recipeController = {
       try {
         const recipe_id = req.params.recipe_id;
         const { title, ingredients, video } = req.body;
-        let photo = cloudinary.uploader.upload(req.file.path);
-        const image = photo.url;
+        console.log("file = ", req.file);
+        let photo = "";
+        if (req.file) {
+          const result = await cloudinary.uploader.upload(req.file.path);
+          photo = result.url;
+        }
+        // let photo = cloudinary.uploader.upload(req.file.path);
+        // const image = photo.url;
         const data = {
           recipe_id,
           title,
           ingredients,
-          photo: image,
+          photo,
           video,
         };
         const result = await recipeModel.updateRecipes(data);
