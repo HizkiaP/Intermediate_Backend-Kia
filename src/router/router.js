@@ -8,6 +8,7 @@ import multerUpload from "../middleware/uploadImage.js";
 const router = express.Router();
 
 router.get("/user", verifyToken, userController.listUser);
+router.get("/:user_id", verifyToken, userController.getByUserId);
 router.post("/user", multerUpload, userController.createUser);
 router.post("/login", userController.userLogin);
 router.post("/register", userController.userRegister);

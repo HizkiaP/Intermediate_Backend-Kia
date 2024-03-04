@@ -17,6 +17,20 @@ const userController = {
     }
   },
 
+  getByUserId: async (req, res) => {
+    try {
+      const {user_id} = req.params;
+      const result = await userModel.findId(user_id);
+      res.status(200);
+      res.json({
+        message: "Get By User Id Success",
+        data: result,
+      });
+    } catch (err) {
+      console.log("Get By User Id Failed");
+    }
+  },
+
   createUser: async (req, res) => {
     try {
       const { username, email, password, phonenumber } = req.body;
