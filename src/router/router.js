@@ -8,7 +8,6 @@ import multerUpload from "../middleware/uploadImage.js";
 const router = express.Router();
 
 router.get("/user", verifyToken, userController.listUser);
-router.get("/:user_id", verifyToken, userController.getByUserId);
 router.post("/user", multerUpload, userController.createUser);
 router.post("/login", userController.userLogin);
 router.post("/register", userController.userRegister);
@@ -20,5 +19,6 @@ router.get("/search", recipeController.searchBy);
 router.post("/recipe", multerUpload, recipeController.createRecipe);
 router.put("/recipe/:recipe_id", multerUpload, recipeController.updateRecipe);
 router.delete("/recipe/:recipe_id", recipeController.deleteRecipe);
+router.get("/profile/:user_id", verifyToken, userController.getByUserId);
 
 export default router;
