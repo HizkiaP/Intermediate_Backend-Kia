@@ -34,21 +34,28 @@ const recipeModel = {
     });
   },
 
-  postRecipes: ({ title, ingredients, photo, video }) => {
+  postRecipes: ({ title, ingredients, photo, video, created_at, user_id }) => {
     try {
-      return db.query(`INSERT INTO recipe (title, ingredients, photo, video)
-           VALUES ('${title}', '${ingredients}', '${photo}', '${video}')
+      return db.query(`INSERT INTO recipe (title, ingredients, photo, video, created_at, user_id)
+           VALUES ('${title}', '${ingredients}', '${photo}', '${video}', '${created_at}', '${user_id}')
            `);
     } catch (err) {
       console.log(err.message);
     }
   },
 
-  updateRecipes: ({ recipe_id, title, ingredients, photo, video }) => {
+  updateRecipes: ({
+    recipe_id,
+    title,
+    ingredients,
+    photo,
+    video,
+    updated_at,
+  }) => {
     try {
       console.log("photo = ", photo);
       return db.query(`UPDATE recipe SET title = '${title}',
-            ingredients = '${ingredients}', photo = '${photo}', video = '${video}'
+            ingredients = '${ingredients}', photo = '${photo}', video = '${video}', updated_at = '${updated_at}'
             WHERE recipe_id = ${recipe_id}`);
     } catch (err) {
       console.log(err.message);
@@ -68,6 +75,16 @@ const recipeModel = {
       return db.query(`DELETE FROM recipe WHERE recipe_id = ${recipe_id}`);
     } catch (err) {
       console.log(err.message);
+    }
+  },
+
+  getRecipeByUserId: () => {
+    try {
+      return db.query(
+        "SELECT * FROM recipe JOIN user_profile ON recipe.user_id = user_profile.user_id"
+      );
+    } catch (error) {
+      console.log(error.message);
     }
   },
 };

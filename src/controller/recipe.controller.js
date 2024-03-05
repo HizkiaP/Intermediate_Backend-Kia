@@ -16,6 +16,22 @@ const recipeController = {
     }
   },
 
+  listRecipeByUserId: async (req, res) => {
+    try {
+      const { user_id } = req.params;
+      console.log("REQUEST = ", req.user_id);
+      const result = await recipeModel.getRecipeByUserId(user_id);
+      console.log("RESULT = ", result);
+      res.status(200);
+      res.json({
+        message: "Get Recipe By User ID Success",
+        data: result.rows,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+
   searchBy: (req, res) => {
     const { keyword, sort, limit, offset } = req.query;
     // const search = keyword.toLowerCase();
@@ -38,13 +54,18 @@ const recipeController = {
         photo = result.url;
       }
       console.log("photo === ", photo);
+      const createDate = new Date().toUTCString();
       // const image = photo.url;
       // console.log("image === ", image);
+      const requestID = req.user_id;
+      console.log("REQUEST ID = ", requestID);
       const data = {
         title,
         ingredients,
         photo,
         video,
+        created_at: createDate,
+        user_id: requestID,
       };
       console.log(data);
       const result = await recipeModel.postRecipes(data);
@@ -77,6 +98,7 @@ const recipeController = {
           const result = await cloudinary.uploader.upload(req.file.path);
           photo = result.url;
         }
+        const updateDate = new Date().toUTCString();
         // let photo = cloudinary.uploader.upload(req.file.path);
         // const image = photo.url;
         const data = {
@@ -85,6 +107,7 @@ const recipeController = {
           ingredients,
           photo,
           video,
+          updated_at: updateDate,
         };
         const result = await recipeModel.updateRecipes(data);
         res.status(200);

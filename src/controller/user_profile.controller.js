@@ -81,8 +81,13 @@ const userController = {
         const { user_id, username, email, password, phonenumber } = req.body;
         // console.log(req);
         // console.log(req.file);
-        const photo = await cloudinary.uploader.upload(req.file.path);
-        const image = photo.url;
+        let photo = "";
+        if (req.file) {
+          const result = await cloudinary.uploader.upload(req.file.path);
+          photo = result.url;
+        }
+        // const photo = await cloudinary.uploader.upload(req.file.path);
+        // const image = photo.url;
         bcrypt.hash(password, 10, async (err, hash) => {
           if (!hash) {
             console.log("Error hash password");
@@ -93,7 +98,7 @@ const userController = {
               email,
               password: hash,
               phonenumber,
-              photo: image,
+              photo,
             };
             // console.log("image ========",data);
             const result = await userModel.updateUsers(data);
