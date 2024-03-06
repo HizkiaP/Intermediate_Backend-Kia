@@ -78,11 +78,12 @@ const recipeModel = {
     }
   },
 
-  getRecipeByUserId: () => {
+  getRecipeByUserId: (user_id) => {
     try {
-      return db.query(
-        "SELECT * FROM recipe JOIN user_profile ON recipe.user_id = user_profile.user_id"
-      );
+      // return db.query(
+      //   "SELECT * FROM recipe JOIN user_profile ON recipe.user_id = user_profile.user_id"
+      // );
+      return db.query(`SELECT * FROM recipe WHERE user_id = ${user_id}`);
     } catch (error) {
       console.log(error.message);
     }
