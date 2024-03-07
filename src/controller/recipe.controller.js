@@ -68,6 +68,23 @@ const recipeController = {
         user_id: requestID,
       };
       console.log(data);
+
+      fetch("https://api.onesignal.com/notifications", {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          Authorization:
+            "Basic NTY5M2I1ZDEtZmY1ZC00OWQ3LTg3ZDUtNTYxOTRmNmIwMzVh",
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          app_id: "0c8569b2-d2a6-4509-9904-11b76cc4e43f",
+          included_segments: ["Total Subscriptions"],
+          contents: { en: "there is a new recipe" },
+          headings: { en: "New Recipe" },
+        }),
+      });
+
       const result = await recipeModel.postRecipes(data);
       res.status(200);
       res.json({
