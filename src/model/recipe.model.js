@@ -88,6 +88,17 @@ const recipeModel = {
       console.log(error.message);
     }
   },
+
+  getRecipeId: (recipe_id) => {
+    try {
+      const query = `SELECT * FROM recipe JOIN user_profile ON recipe.user_id = user_profile.user_id WHERE recipe.recipe_id =${recipe_id}`;
+      console.log("QUERY = ", query);
+      return db.query(query);
+    } catch (error) {
+      console.log(error.message);
+      throw error;
+    }
+  },
 };
 
 export default recipeModel;

@@ -32,6 +32,23 @@ const recipeController = {
     }
   },
 
+  listRecipeId: async (req, res) => {
+    try {
+      const { recipe_id } = req.params;
+      // const user_id = req.user_id;
+      console.log("REQUEST = ", req.user_id);
+      const result = await recipeModel.getRecipeId(recipe_id);
+      console.log("RESULT = ", result);
+      res.status(200);
+      res.json({
+        message: "Get Recipe ID Success",
+        data: result.rows,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  },
+
   searchBy: (req, res) => {
     const { keyword, sort, limit, offset } = req.query;
     // const search = keyword.toLowerCase();

@@ -17,9 +17,10 @@ router.delete("/user/:user_id", userController.deleteUser);
 
 router.get("/recipe", recipeController.listRecipe);
 router.get("/recipe/:user_id", verifyToken, recipeController.listRecipeByUserId);
+router.get("/recipe/getbyid/:recipe_id", verifyToken, recipeController.listRecipeId);
 router.get("/search", recipeController.searchBy);
 router.post("/recipe", multerUpload, verifyToken, recipeController.createRecipe);
-router.put("/recipe/:recipe_id", multerUpload, recipeController.updateRecipe);
+router.put("/recipe/:recipe_id", multerUpload, verifyToken, recipeController.updateRecipe);
 router.delete("/recipe/:recipe_id", recipeController.deleteRecipe);
 
 
