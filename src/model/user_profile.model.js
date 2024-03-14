@@ -11,10 +11,10 @@ const userModel = {
         }
     },
 
-    postUsers: ({username, email, password, phonenumber, photo}) => {
+    postUsers: ({username, email, password, phonenumber, image}) => {
         try {
             return db.query(`INSERT INTO user_profile (username, email, password, phonenumber, photo)
-           VALUES ('${username}', '${email}', '${password}', '${phonenumber}', '${photo}')
+           VALUES ('${username}', '${email}', '${password}', '${phonenumber}', '${image}')
            `);
         }
 
@@ -23,10 +23,10 @@ const userModel = {
         }
     },
 
-    updateUsers: ({user_id, username, email, password, phonenumber, photo}) => {
+    updateUsers: ({user_id, username, email, password, phonenumber, image}) => {
         try {
             return db.query(`UPDATE user_profile SET username = '${username}',
-            email = '${email}', password = '${password}', phonenumber = '${phonenumber}', photo = '${photo}'
+            email = '${email}', password = '${password}', phonenumber = '${phonenumber}', photo = '${image}'
             WHERE user_id = ${user_id}`);
         }
 

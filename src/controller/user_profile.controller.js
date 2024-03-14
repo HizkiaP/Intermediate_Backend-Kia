@@ -50,7 +50,7 @@ const userController = {
             email,
             phonenumber,
             password: hash,
-            photo: image,
+            image,
           };
           const result = await userModel.postUsers(data);
           // console.log(result);
@@ -98,7 +98,7 @@ const userController = {
               email,
               password: hash,
               phonenumber,
-              photo,
+              image: photo,
             };
             // console.log("image ========",data);
             const result = await userModel.updateUsers(data);
