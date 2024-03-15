@@ -12,7 +12,7 @@ router.get("/profile/:user_id", verifyToken, userController.getByUserId);
 router.post("/user", multerUpload, userController.createUser);
 router.post("/login", userController.userLogin);
 router.post("/register", userController.userRegister);
-router.put("/user/:user_id", multerUpload, userController.updateUser);
+router.put("/user/:user_id", multerUpload, verifyToken, userController.updateUser);
 router.delete("/user/:user_id", userController.deleteUser);
 
 router.get("/recipe", recipeController.listRecipe);
