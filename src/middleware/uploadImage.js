@@ -29,7 +29,7 @@ const multerUpload = (req, res, next) => {
     limits: {
       fileSize: 2000000,
     },
-  }).single("photo");
+  }).single("image", "photo");
 
   upload(req, res, (err) => {
     if (err instanceof multer.MulterError) {
