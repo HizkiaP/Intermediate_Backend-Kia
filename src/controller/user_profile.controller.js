@@ -74,11 +74,11 @@ const userController = {
         console.log("User Id Not Found");
       }
 
-      const data = rows[0];
-      console.log(data);
+      // const data = rows[0];
+      // console.log(data);
 
       try {
-        const { user_id, username, email, password, phonenumber } = req.body;
+        const { username, email, phonenumber } = req.body;
         // console.log(req);
         // console.log(req.file);
         let photo = "";
@@ -88,27 +88,19 @@ const userController = {
         }
         // const photo = await cloudinary.uploader.upload(req.file.path);
         // const image = photo.url;
-        bcrypt.hash(password, 10, async (err, hash) => {
-          if (!hash) {
-            console.log("Error hash password");
-          } else {
-            const data = {
-              user_id,
-              username,
-              email,
-              password: hash,
-              phonenumber,
-              image: photo,
-            };
-            // console.log("image ========",data);
-            const result = await userModel.updateUsers(data);
-            res.status(200);
-            res.json({
-              message: "Update User Success",
-              data: result,
-            });
-          }
-        });
+          const data = {
+            username,
+            email,
+            phonenumber,
+            image: photo,
+          };
+          // console.log("image ========",data);
+          const result = await userModel.updateUsers(data, searchId);
+          res.status(200);
+          res.json({
+            message: "Update User Success",
+            data: result,
+          });
       } catch (error) {
         console.log(error.message);
       }
