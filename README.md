@@ -83,6 +83,8 @@ Start the project
 
 ## Related Project
 
+⚡[`Backend Deploy`](https://intermediate-backend-kia.vercel.app/)⚡
+
 ⚡[`Frontend Recipe`](https://github.com/HizkiaP/MamaRecipe_FrontEnd)⚡
 
 ⚡[`Demo Mama Recipe`](https://mama-recipe-front-end.vercel.app)⚡
