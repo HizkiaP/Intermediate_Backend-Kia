@@ -78,7 +78,7 @@ const userController = {
       // console.log(data);
 
       try {
-        const { username, email, phonenumber } = req.body;
+        const { username, email, password, phonenumber } = req.body;
         // console.log(req);
         // console.log(req.file);
         let photo = "";
@@ -88,12 +88,16 @@ const userController = {
         }
         // const photo = await cloudinary.uploader.upload(req.file.path);
         // const image = photo.url;
+        bcrypt.hash(password, 10, async (err, hash) => {
+          console.log(hash);
           const data = {
             username,
             email,
+            password: hash,
             phonenumber,
             image: photo,
           };
+          console.log("DATA UPDATE = " ,data);
           // console.log("image ========",data);
           const result = await userModel.updateUsers(data, searchId);
           res.status(200);
@@ -101,6 +105,7 @@ const userController = {
             message: "Update User Success",
             data: result,
           });
+        });
       } catch (error) {
         console.log(error.message);
       }

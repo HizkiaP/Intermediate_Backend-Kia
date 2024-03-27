@@ -23,10 +23,10 @@ const userModel = {
         }
     },
 
-    updateUsers: ({username, email, phonenumber, image}, user_id ) => {
+    updateUsers: ({username, email, password, phonenumber, image}, user_id ) => {
         try {
             return db.query(`UPDATE user_profile SET username = '${username}',
-            email = '${email}', phonenumber = '${phonenumber}', image = '${image}'
+            email = '${email}', password = '${password}', phonenumber = '${phonenumber}', image = '${image}'
             WHERE user_id = ${user_id}`);
         }
 
